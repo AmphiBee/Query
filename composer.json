@@ -1,0 +1,29 @@
+{
+    "name": "pollen/query",
+    "description": "Create WP Query in a fluent way.",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Olivier Gorzalka",
+            "email": "olivier@amphibee.fr",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pollen\\Query\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.19"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require": {
+        "pollen/wordpress-args": "dev-main",
+        "laravel/pint": "^1.13"
+    }
+}
