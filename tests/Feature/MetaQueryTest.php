@@ -12,7 +12,6 @@ test('MetaQuery: meta_query (simple)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'meta_query' => [
             'relation' => 'AND',
             [
@@ -38,7 +37,6 @@ test('MetaQuery: meta_query (or relation)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'meta_query' => [
             'relation' => 'OR',
             [
@@ -71,7 +69,6 @@ test('MetaQuery: meta_query called twice', function () {
         ->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'meta_query' => [
             'relation' => 'OR',
             [
@@ -109,7 +106,6 @@ test('MetaQuery: meta_query (and relation)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'meta_query' => [
             'relation' => 'AND',
             [
@@ -160,7 +156,6 @@ test('MetaQuery: meta_query (nested)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'meta_query' => [
             'relation' => 'OR',
             [

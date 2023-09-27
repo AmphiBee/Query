@@ -6,7 +6,7 @@ namespace Pollen\Query\Traits;
 
 trait Post
 {
-    protected $postType;
+    protected $postType = 'all';
 
     protected $p;
 

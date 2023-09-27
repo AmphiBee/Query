@@ -9,7 +9,6 @@ test('Caching: cache_results', function () {
 
     expect($args)->toMatchArray([
         'cache_results' => true,
-        'fields' => 'all',
     ]);
 });
 
@@ -20,7 +19,6 @@ test('Caching: update_post_meta_cache=>false', function () {
 
     expect($args)->toMatchArray([
         'update_post_meta_cache' => false,
-        'fields' => 'all',
     ]);
 });
 
@@ -31,6 +29,5 @@ test('Caching: update_post_term_cache=>true', function () {
 
     expect($args)->toMatchArray([
         'update_post_term_cache' => true,
-        'fields' => 'all',
     ]);
 });

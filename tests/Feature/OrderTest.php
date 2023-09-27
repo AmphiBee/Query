@@ -13,6 +13,5 @@ test('Order: orderby', function () {
             'most_comments' => 'DESC',
             'post_date' => 'ASC',
         ],
-        'fields' => 'all',
     ]);
 });

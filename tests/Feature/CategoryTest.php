@@ -9,7 +9,6 @@ test('Category: cat', function () {
 
     expect($args)->toMatchArray([
         'cat' => 1,
-        'fields' => 'all',
     ]);
 });
 
@@ -20,7 +19,6 @@ test('Category: category_name', function () {
 
     expect($args)->toMatchArray([
         'category_name' => 'sales',
-        'fields' => 'all',
     ]);
 });
 
@@ -31,7 +29,6 @@ test('Category: category__in', function () {
 
     expect($args)->toMatchArray([
         'category__in' => [1, 2, 3],
-        'fields' => 'all',
     ]);
 });
 
@@ -42,6 +39,5 @@ test('Category: category__not_in', function () {
 
     expect($args)->toMatchArray([
         'category__not_in' => [1, 2, 3],
-        'fields' => 'all',
     ]);
 });

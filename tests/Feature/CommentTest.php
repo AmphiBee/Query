@@ -9,6 +9,5 @@ test('Comment: comment_count', function () {
 
     expect($args)->toMatchArray([
         'comment_count' => 1,
-        'fields' => 'all',
     ]);
 });

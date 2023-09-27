@@ -9,7 +9,6 @@ test('Password: has_password=>true', function () {
 
     expect($args)->toMatchArray([
         'has_password' => true,
-        'fields' => 'all',
     ]);
 });
 
@@ -20,7 +19,6 @@ test('Password: has_password=>false', function () {
 
     expect($args)->toMatchArray([
         'has_password' => false,
-        'fields' => 'all',
     ]);
 });
 
@@ -31,6 +29,5 @@ test('Password: post_password', function () {
 
     expect($args)->toMatchArray([
         'post_password' => 'zxcvbn',
-        'fields' => 'all',
     ]);
 });

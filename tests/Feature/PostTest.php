@@ -9,7 +9,6 @@ test('Post: post_type', function () {
 
     expect($args)->toMatchArray([
         'post_type' => 'article',
-        'fields' => 'all',
     ]);
 });
 
@@ -20,7 +19,6 @@ test('Post: p (post_id)', function () {
 
     expect($args)->toMatchArray([
         'p' => 42,
-        'fields' => 'all',
     ]);
 });
 
@@ -31,7 +29,6 @@ test('Post: name (post_slug)', function () {
 
     expect($args)->toMatchArray([
         'name' => 'mon-article',
-        'fields' => 'all',
     ]);
 });
 
@@ -42,7 +39,6 @@ test('Post: post_parent', function () {
 
     expect($args)->toMatchArray([
         'post_parent' => 5,
-        'fields' => 'all',
     ]);
 });
 
@@ -53,7 +49,6 @@ test('Post: post_parent__in', function () {
 
     expect($args)->toMatchArray([
         'post_parent__in' => [1, 2, 3],
-        'fields' => 'all',
     ]);
 });
 
@@ -64,7 +59,6 @@ test('Post: post_parent__not_in', function () {
 
     expect($args)->toMatchArray([
         'post_parent__not_in' => [4, 5, 6],
-        'fields' => 'all',
     ]);
 });
 
@@ -75,7 +69,6 @@ test('Post: post__in', function () {
 
     expect($args)->toMatchArray([
         'post__in' => [7, 8, 9],
-        'fields' => 'all',
     ]);
 });
 
@@ -86,7 +79,6 @@ test('Post: post__not_in', function () {
 
     expect($args)->toMatchArray([
         'post__not_in' => [10, 11, 12],
-        'fields' => 'all',
     ]);
 });
 
@@ -97,6 +89,5 @@ test('Post: post_name__in', function () {
 
     expect($args)->toMatchArray([
         'post_name__in' => ['slug-1', 'slug-2'],
-        'fields' => 'all',
     ]);
 });

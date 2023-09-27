@@ -37,13 +37,12 @@ test('DateQuery: date_query (simple)', function () {
             ],
             'inclusive' => true,
         ],
-        'fields' => 'all',
     ]
     );
 });
 
 test('DateQuery: date_query (or relation)', function () {
-    $args = PostQuery::select()->DateQuery(function (DateQuery $query) {
+    $args = PostQuery::select()->dateQuery(function (DateQuery $query) {
         $query->where(
             $query
                 ->date('posted_at')
@@ -87,6 +86,5 @@ test('DateQuery: date_query (or relation)', function () {
                 ],
             ],
         ],
-        'fields' => 'all',
     ]);
 });

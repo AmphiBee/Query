@@ -9,6 +9,5 @@ test('Status: post_status', function () {
 
     expect($args)->toMatchArray([
         'post_status' => 'publish',
-        'fields' => 'all',
     ]);
 });

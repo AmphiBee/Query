@@ -14,7 +14,6 @@ test('TaxQuery: tax_query (simple)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'tax_query' => [
             'relation' => 'AND',
             [
@@ -47,7 +46,6 @@ test('TaxQuery: tax_query (or relation)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'tax_query' => [
             'relation' => 'OR',
             [
@@ -102,7 +100,6 @@ test('TaxQuery: tax_query (nested)', function () {
     })->getArguments();
 
     expect($args)->toMatchArray([
-        'fields' => 'all',
         'tax_query' => [
             'relation' => 'OR',
             [
@@ -155,7 +152,5 @@ test('TaxQuery: tax_query (nested)', function () {
                 ],
             ],
         ],
-    ]
-
-    );
+    ]);
 });

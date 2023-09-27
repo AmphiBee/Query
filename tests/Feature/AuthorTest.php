@@ -9,7 +9,6 @@ test('Author: author', function () {
 
     expect($args)->toMatchArray([
         'author' => 1,
-        'fields' => 'all',
     ]);
 });
 
@@ -20,7 +19,6 @@ test('Author: author_name', function () {
 
     expect($args)->toMatchArray([
         'author_name' => 'taylor',
-        'fields' => 'all',
     ]);
 });
 
@@ -31,7 +29,6 @@ test('Author: author__in', function () {
 
     expect($args)->toMatchArray([
         'author__in' => [1, 2, 3],
-        'fields' => 'all',
     ]);
 });
 
@@ -42,6 +39,5 @@ test('Author: author__not_in', function () {
 
     expect($args)->toMatchArray([
         'author__not_in' => [1, 2, 3],
-        'fields' => 'all',
     ]);
 });

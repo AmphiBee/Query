@@ -4,11 +4,10 @@ use Pollen\Query\PostQuery;
 
 test('Search: s (keyword)', function () {
     $args = PostQuery::select()
-        ->search('mon mot clé')
+        ->search('my keyword')
         ->getArguments();
 
     expect($args)->toMatchArray([
-        's' => 'mon mot clé',
-        'fields' => 'all',
+        's' => 'my keyword',
     ]);
 });

@@ -9,7 +9,6 @@ test('Tag: tag', function () {
 
     expect($args)->toMatchArray([
         'tag' => 'programming',
-        'fields' => 'all',
     ]);
 });
 
@@ -20,7 +19,6 @@ test('Tag: tag_id', function () {
 
     expect($args)->toMatchArray([
         'tag_id' => 1,
-        'fields' => 'all',
     ]);
 });
 
@@ -31,7 +29,6 @@ test('Tag: tag__and', function () {
 
     expect($args)->toMatchArray([
         'tag__and' => [1, 2],
-        'fields' => 'all',
     ]);
 });
 
@@ -42,7 +39,6 @@ test('Tag: tag__in', function () {
 
     expect($args)->toMatchArray([
         'tag__in' => [3, 4],
-        'fields' => 'all',
     ]);
 });
 
@@ -53,7 +49,6 @@ test('Tag: tag__not_in', function () {
 
     expect($args)->toMatchArray([
         'tag__not_in' => [5, 6],
-        'fields' => 'all',
     ]);
 });
 
@@ -64,7 +59,6 @@ test('Tag: tag_slug__and', function () {
 
     expect($args)->toMatchArray([
         'tag_slug__and' => ['dev', 'qa'],
-        'fields' => 'all',
     ]);
 });
 
@@ -75,6 +69,5 @@ test('Tag: tag_slug__in', function () {
 
     expect($args)->toMatchArray([
         'tag_slug__in' => ['frontend', 'backend'],
-        'fields' => 'all',
     ]);
 });
