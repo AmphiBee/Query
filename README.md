@@ -2,6 +2,26 @@
 
 The `PostQuery` class is a fluent interface for constructing WP_Query objects in WordPress. This class simplifies the process of building complex queries and provides a more readable and concise way to define query parameters.
 
+- [Advantages](#advantages-of-using-postquery-wrapper)
+- [Basic Usage](#basic-usage)
+- [Author](#author)
+- [Category](#category)
+- [Tag](#tag)
+- [Tax_Query](#tax_query)
+- [Search](#search)
+- [Post](#post)
+- [Password](#password)
+- [Status](#status)
+- [Comment Parameter](#comment-parameter)
+- [Pagination](#pagination)
+- [Order](#order)
+- [Date](#date)
+- [Meta Query](#meta-query)
+- [Permission](#permission)
+- [Mimetype](#mimetype)
+- [Cache](#cache)
+
+
 ## Advantages of Using `PostQuery` Wrapper
 
 When using the `PostQuery` wrapper, you gain several advantages over using the original `WP_Query` class for querying posts in WordPress:
