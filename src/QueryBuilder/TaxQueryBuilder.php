@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Pollen\Query\QueryBuilder;
 
-use Exception;
+use Pollen\Query\QueryException;
 
 /**
  * Class TaxQueryBuilder
@@ -107,7 +107,7 @@ class TaxQueryBuilder extends SubQuery
      * @param  string  $field The field to be used in the query.
      * @return self Returns the current instance of the object.
      *
-     * @throws Exception If an invalid tax field type is supplied.
+     * @throws QueryException If an invalid tax field type is supplied.
      */
     public function field(string $field): self
     {
@@ -115,7 +115,7 @@ class TaxQueryBuilder extends SubQuery
         $allowed = [self::SEARCH_BY_ID, self::SEARCH_BY_NAME, self::SEARCH_BY_TERM_TAX_ID, self::SEARCH_BY_SLUG];
 
         if (! in_array($field, $allowed)) {
-            throw new Exception('Invalid tax field type supplied: '.$field);
+            throw new QueryException('Invalid tax field type supplied: '.$field);
         }
 
         $this->field = $field;
@@ -153,7 +153,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term slugs.
      *
-     * @throws Exception
+     * @throws QueryException
      */
     public function searchByTermSlug(): self
     {
@@ -165,7 +165,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term names.
      *
-     * @throws Exception
+     * @throws QueryException
      */
     public function searchByTermName(): self
     {
@@ -177,7 +177,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term taxonomy IDs.
      *
-     * @throws Exception
+     * @throws QueryException
      */
     public function searchByTermTaxId(): self
     {
@@ -189,7 +189,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term IDs.
      *
-     * @throws Exception
+     * @throws QueryException
      */
     public function searchById(): self
     {

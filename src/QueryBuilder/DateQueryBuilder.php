@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pollen\Query\QueryBuilder;
 
-use Exception;
+use Pollen\Query\QueryException;
 
 class DateQueryBuilder extends SubQuery
 {
@@ -52,7 +52,7 @@ class DateQueryBuilder extends SubQuery
     {
         foreach ($date as $key => $part) {
             if (! in_array($key, self::ALLOWED_KEYS)) {
-                throw new Exception('Invalid key '.$key.' element supplied.');
+                throw new QueryException('Invalid key '.$key.' element supplied.');
             }
             $this->$key = $part;
         }
@@ -114,7 +114,7 @@ class DateQueryBuilder extends SubQuery
             $date = strtotime((string) $date);
 
             if ($date === false) {
-                throw new Exception('Provided datestring '.$date.' could not be converted to time');
+                throw new QueryException('Provided datestring '.$date.' could not be converted to time');
             }
         }
 
