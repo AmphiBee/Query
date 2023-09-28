@@ -9,10 +9,6 @@ use Pollen\Query\QueryBuilder\MetaQueryBuilder;
 
 class Query
 {
-    public function __construct()
-    {
-    }
-
     public static function meta($key)
     {
         return new MetaQueryBuilder($key);

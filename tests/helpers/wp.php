@@ -9,7 +9,7 @@
  */
 function wp_parse_str(string $input_string, array &$result): void
 {
-    parse_str((string) $input_string, $result);
+    parse_str($input_string, $result);
 }
 
 /**

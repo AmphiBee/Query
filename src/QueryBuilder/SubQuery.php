@@ -8,37 +8,37 @@ abstract class SubQuery
 {
     protected $compare = 'LIKE';
 
-    const EQUAL = '=';
+    public const EQUAL = '=';
 
-    const NOT_EQUAL = '!=';
+    public const NOT_EQUAL = '!=';
 
-    const GREATER = '>';
+    public const GREATER = '>';
 
-    const GREATER_EQUAL = '>=';
+    public const GREATER_EQUAL = '>=';
 
-    const LESS = '<';
+    public const LESS = '<';
 
-    const LESS_EQUAL = '<=';
+    public const LESS_EQUAL = '<=';
 
-    const LIKE = 'LIKE';
+    public const LIKE = 'LIKE';
 
-    const NOT_LIKE = 'NOT LIKE';
+    public const NOT_LIKE = 'NOT LIKE';
 
-    const IN = 'IN';
+    public const IN = 'IN';
 
-    const NOT_IN = 'NOT IN';
+    public const NOT_IN = 'NOT IN';
 
-    const BETWEEN = 'BETWEEN';
+    public const BETWEEN = 'BETWEEN';
 
-    const NOT_BETWEEN = 'NOT BETWEEN';
+    public const NOT_BETWEEN = 'NOT BETWEEN';
 
-    const EXISTS = 'EXISTS';
+    public const EXISTS = 'EXISTS';
 
-    const NOT_EXISTS = 'NOT EXISTS';
+    public const NOT_EXISTS = 'NOT EXISTS';
 
-    const REGEXP = 'REGEXP';
+    public const REGEXP = 'REGEXP';
 
-    const NOT_REGEXP = 'NOT REGEXP';
+    public const NOT_REGEXP = 'NOT REGEXP';
 
-    const RLIKE = 'RLIKE';
+    public const RLIKE = 'RLIKE';
 }

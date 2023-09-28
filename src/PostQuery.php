@@ -22,6 +22,7 @@ use Pollen\Query\Traits\Status;
 use Pollen\Query\Traits\Tag;
 use Pollen\Query\Traits\TaxQuery;
 use Pollen\WordPressArgs\ArgumentHelper;
+use WP_Query;
 
 class PostQuery
 {
@@ -61,10 +62,10 @@ class PostQuery
         return $args;
     }
 
-    public function get(): \WP_Query
+    public function get(): WP_Query
     {
         $args = $this->getArguments();
 
-        return new \WP_Query($args);
+        return new WP_Query($args);
     }
 }

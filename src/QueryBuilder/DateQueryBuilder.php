@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Pollen\Query\QueryBuilder;
 
+use Exception;
+
 class DateQueryBuilder extends SubQuery
 {
     private $year;
@@ -18,15 +20,15 @@ class DateQueryBuilder extends SubQuery
 
     private $second;
 
-    private $after = null;
+    private $after;
 
-    private $before = null;
+    private $before;
 
-    const POST_CREATED = 'post_date';
+    final public const POST_CREATED = 'post_date';
 
-    const POST_MODIFIED = 'post_modified';
+    final public const POST_MODIFIED = 'post_modified';
 
-    const ALLOWED_KEYS = ['year', 'month', 'day', 'hour', 'minute', 'second'];
+    final public const ALLOWED_KEYS = ['year', 'month', 'day', 'hour', 'minute', 'second'];
 
     public function __construct(private ?string $column = 'post_date')
     {
@@ -50,7 +52,7 @@ class DateQueryBuilder extends SubQuery
     {
         foreach ($date as $key => $part) {
             if (! in_array($key, self::ALLOWED_KEYS)) {
-                throw new \Exception('Invalid key '.$key.' element supplied.');
+                throw new Exception('Invalid key '.$key.' element supplied.');
             }
             $this->$key = $part;
         }
@@ -109,31 +111,31 @@ class DateQueryBuilder extends SubQuery
         }
 
         if (! is_numeric($date)) {
-            $date = strtotime($date);
+            $date = strtotime((string) $date);
 
             if ($date === false) {
-                throw new \Exception('Provided datestring '.$date.' could not be converted to time');
+                throw new Exception('Provided datestring '.$date.' could not be converted to time');
             }
         }
 
         $extracted = [];
 
-        if (strpos($extract, 'Y') !== false) {
+        if (str_contains((string) $extract, 'Y')) {
             $extracted['year'] = date('Y', $date);
         }
-        if (strpos($extract, 'm') !== false) {
+        if (str_contains((string) $extract, 'm')) {
             $extracted['month'] = date('m', $date);
         }
-        if (strpos($extract, 'd') !== false) {
+        if (str_contains((string) $extract, 'd')) {
             $extracted['day'] = date('d', $date);
         }
-        if (strpos($extract, 'h') !== false) {
+        if (str_contains((string) $extract, 'h')) {
             $extracted['hour'] = date('h', $date);
         }
-        if (strpos($extract, 'i') !== false) {
+        if (str_contains((string) $extract, 'i')) {
             $extracted['minute'] = date('i', $date);
         }
-        if (strpos($extract, 's') !== false) {
+        if (str_contains((string) $extract, 's')) {
             $extracted['second'] = date('s', $date);
         }
 

@@ -14,7 +14,7 @@ trait Caching
 
     public function cacheResults(bool $value = true): self
     {
-        $this->cacheResults = (bool) $value;
+        $this->cacheResults = $value;
 
         return $this;
     }

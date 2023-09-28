@@ -6,20 +6,17 @@ namespace Pollen\Query\QueryBuilder;
 
 class QueryBuilder
 {
-    protected $query;
+    protected $query = ['relation' => 'AND'];
 
     protected $stack;
 
-    protected $depth;
+    protected $depth = 0;
 
-    protected $lastRelation;
+    protected $lastRelation = [];
 
     public function __construct()
     {
-        $this->query = ['relation' => 'AND'];
         $this->stack = [&$this->query];
-        $this->depth = 0;
-        $this->lastRelation = [];
     }
 
     public function where($callbackOrKey)

@@ -8,28 +8,28 @@ class MetaQueryBuilder extends SubQuery
 {
     protected $type;
 
-    const NUMERIC = 'NUMERIC';
+    final public const NUMERIC = 'NUMERIC';
 
-    const BINARY = 'BINARY';
+    final public const BINARY = 'BINARY';
 
-    const CHAR = 'CHAR';
+    final public const CHAR = 'CHAR';
 
-    const DATE = 'DATE';
+    final public const DATE = 'DATE';
 
-    const DATETIME = 'DATETIME';
+    final public const DATETIME = 'DATETIME';
 
-    const DECIMAL = 'DECIMAL';
+    final public const DECIMAL = 'DECIMAL';
 
-    const SIGNED = 'SIGNED';
+    final public const SIGNED = 'SIGNED';
 
-    const TIME = 'TIME';
+    final public const TIME = 'TIME';
 
-    const UNSIGNED = 'UNSIGNED';
+    final public const UNSIGNED = 'UNSIGNED';
 
     protected ?string $state = null;
 
     public function __construct(
-        private mixed $key,
+        private readonly mixed $key,
         private mixed $value = null,
     ) {
     }
@@ -136,7 +136,7 @@ class MetaQueryBuilder extends SubQuery
         return $this->compareWith(self::BETWEEN, [
             $lowerBoundary,
             $upperBoundary,
-        ], self::NUMERIC);
+        ]);
     }
 
     public function notBetween(mixed $lowerBoundary, mixed $upperBoundary): self
@@ -192,7 +192,7 @@ class MetaQueryBuilder extends SubQuery
         $config = [
             'key' => $this->key,
             'compare' => $this->compare,
-            'type' => strtoupper($this->type),
+            'type' => strtoupper((string) $this->type),
             'state' => $this->state,
         ];
 

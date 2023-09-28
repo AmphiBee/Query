@@ -11,7 +11,7 @@
 |
 */
 
-include dirname(__FILE__).'/helpers'.DIRECTORY_SEPARATOR.'wp.php';
+include __DIR__.'/helpers'.DIRECTORY_SEPARATOR.'wp.php';
 
 // uses(Tests\TestCase::class)->in('Feature');
 
@@ -26,9 +26,7 @@ include dirname(__FILE__).'/helpers'.DIRECTORY_SEPARATOR.'wp.php';
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 /*
 |--------------------------------------------------------------------------

@@ -15,7 +15,8 @@
         }
     },
     "require-dev": {
-        "pestphp/pest": "^2.19"
+        "pestphp/pest": "^2.19",
+        "rector/rector": "^0.18.4"
     },
     "config": {
         "allow-plugins": {

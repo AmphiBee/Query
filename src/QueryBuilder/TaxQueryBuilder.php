@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Pollen\Query\QueryBuilder;
 
+use Exception;
+
 /**
  * Class TaxQueryBuilder
  *
@@ -29,25 +31,25 @@ class TaxQueryBuilder extends SubQuery
      * $termTaxonomyId = 10;
      * $results = performSearch($searchBy, $termTaxonomyId);
      */
-    const SEARCH_BY_SLUG = 'slug';
+    final public const SEARCH_BY_SLUG = 'slug';
 
     /**
      * Constant representing the search term 'term_taxonomy_id'.
      */
-    const SEARCH_BY_NAME = 'name';
+    final public const SEARCH_BY_NAME = 'name';
 
     /**
      * @var string SEARCH_BY_TERM_TAX_ID
      * Constant that represents the search parameter name for searching by term taxonomy ID.
      */
-    const SEARCH_BY_TERM_TAX_ID = 'term_taxonomy_id';
+    final public const SEARCH_BY_TERM_TAX_ID = 'term_taxonomy_id';
 
     /**
      * This constant defines the term taxonomy ID for searching.
      *
      * @var string SEARCH_BY_TERM_TAX_ID
      */
-    const SEARCH_BY_ID = 'term_id';
+    final public const SEARCH_BY_ID = 'term_id';
 
     /**
      * Defines the constant SEARCH_BY_TERM_TAX_ID and its value 'term_taxonomy_id'.
@@ -105,7 +107,7 @@ class TaxQueryBuilder extends SubQuery
      * @param  string  $field The field to be used in the query.
      * @return self Returns the current instance of the object.
      *
-     * @throws \Exception If an invalid tax field type is supplied.
+     * @throws Exception If an invalid tax field type is supplied.
      */
     public function field(string $field): self
     {
@@ -113,7 +115,7 @@ class TaxQueryBuilder extends SubQuery
         $allowed = [self::SEARCH_BY_ID, self::SEARCH_BY_NAME, self::SEARCH_BY_TERM_TAX_ID, self::SEARCH_BY_SLUG];
 
         if (! in_array($field, $allowed)) {
-            throw new \Exception('Invalid tax field type supplied: '.$field);
+            throw new Exception('Invalid tax field type supplied: '.$field);
         }
 
         $this->field = $field;
@@ -151,7 +153,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term slugs.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function searchByTermSlug(): self
     {
@@ -163,7 +165,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term names.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function searchByTermName(): self
     {
@@ -175,7 +177,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term taxonomy IDs.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function searchByTermTaxId(): self
     {
@@ -187,7 +189,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the field to search for term IDs.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function searchById(): self
     {
