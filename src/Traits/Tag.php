@@ -4,21 +4,38 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Traits;
 
+use Pollen\Query\PostQuery;
+
 trait Tag
 {
-    protected $tag;
+    protected ?string $tag = null;
 
-    protected $tagId;
+    protected ?int $tagId = null;
 
-    protected $tag_And;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $tag_And = null;
 
-    protected $tag_In;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $tag_In = null;
 
-    protected $tag_NotIn;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $tag_NotIn = null;
 
-    protected $tagSlug_And;
+    /**
+     * @var array<string>|null
+     */
+    protected ?array $tagSlug_And = null;
 
-    protected $tagSlug_In;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $tagSlug_In = null;
 
     public function tag(string $tag): self
     {
@@ -34,6 +51,10 @@ trait Tag
         return $this;
     }
 
+    /**
+     * @param array<int> $tagAnd
+     * @return PostQuery|Tag
+     */
     public function tagAnd(array $tagAnd): self
     {
         $this->tag_And = $tagAnd;
@@ -41,6 +62,10 @@ trait Tag
         return $this;
     }
 
+    /**
+     * @param array<int> $tagIn
+     * @return PostQuery|Tag
+     */
     public function tagIn(array $tagIn): self
     {
         $this->tag_In = $tagIn;
@@ -48,6 +73,10 @@ trait Tag
         return $this;
     }
 
+    /**
+     * @param array<int> $tagNotIn
+     * @return PostQuery|Tag
+     */
     public function tagNotIn(array $tagNotIn): self
     {
         $this->tag_NotIn = $tagNotIn;
@@ -55,6 +84,10 @@ trait Tag
         return $this;
     }
 
+    /**
+     * @param array<int> $tagSlugAnd
+     * @return PostQuery|Tag
+     */
     public function tagSlugAnd(array $tagSlugAnd): self
     {
         $this->tagSlug_And = $tagSlugAnd;
@@ -62,6 +95,10 @@ trait Tag
         return $this;
     }
 
+    /**
+     * @param array<string> $tagSlugIn
+     * @return PostQuery|Tag
+     */
     public function tagSlugIn(array $tagSlugIn): self
     {
         $this->tagSlug_In = $tagSlugIn;

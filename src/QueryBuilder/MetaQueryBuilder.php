@@ -4,27 +4,13 @@ declare(strict_types=1);
 
 namespace Pollen\Query\QueryBuilder;
 
+use Pollen\Query\Utils\ValueTypeDetector;
+
 class MetaQueryBuilder extends SubQuery
 {
-    protected $type;
+    protected ?string $type;
 
-    final public const NUMERIC = 'NUMERIC';
-
-    final public const BINARY = 'BINARY';
-
-    final public const CHAR = 'CHAR';
-
-    final public const DATE = 'DATE';
-
-    final public const DATETIME = 'DATETIME';
-
-    final public const DECIMAL = 'DECIMAL';
-
-    final public const SIGNED = 'SIGNED';
-
-    final public const TIME = 'TIME';
-
-    final public const UNSIGNED = 'UNSIGNED';
+    private ComparisonBuilder $comparisonBuilder;
 
     protected ?string $state = null;
 
@@ -32,6 +18,7 @@ class MetaQueryBuilder extends SubQuery
         private readonly mixed $key,
         private mixed $value = null,
     ) {
+        $this->comparisonBuilder = new ComparisonBuilder($this->value, $this->type ?? null);
     }
 
     public function ofType(string $type): self
@@ -41,133 +28,102 @@ class MetaQueryBuilder extends SubQuery
         return $this;
     }
 
-    public function detectValueType($value)
-    {
-        $defaultType = 'CHAR';
-
-        if (is_array($value)) {
-            $value = $value[0];
-        }
-
-        if (! is_null($this->type)) {
-            return $this->type;
-        }
-
-        if (is_null($value)) {
-            return $defaultType;
-        }
-
-        if ($value === 0 || $value === 1) {
-            return self::BINARY;
-        }
-
-        if (is_int($value) && $value < 0) {
-            return self::SIGNED;
-        }
-
-        if (is_int($value) && $value >= 0) {
-            return self::UNSIGNED;
-        }
-
-        if (is_float($value)) {
-            return self::DECIMAL;
-        }
-
-        if (is_string($value) && is_numeric($value)) {
-            return self::NUMERIC;
-        }
-
-        if (is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
-            return self::DATE;
-        }
-
-        if (is_string($value) && preg_match('/^\d{2}:\d{2}:\d{2}$/', $value)) {
-            return self::TIME;
-        }
-
-        if (is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $value)) {
-            return self::DATETIME;
-        }
-
-        return $defaultType;
-    }
-
-    private function compareWith(string $compare, mixed $value): self
-    {
-        $this->compare = $compare;
-        $this->type = $this->detectValueType($value);
-        $this->value = $value;
-
-        return $this;
-    }
-
     public function greaterThan(mixed $value): self
     {
-        return $this->compareWith(self::GREATER, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::GREATER, $value);
+        return $this;
     }
 
     public function greaterOrEqualTo(mixed $value): self
     {
-        return $this->compareWith(self::GREATER_EQUAL, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::GREATER_EQUAL, $value);
+        return $this;
     }
 
     public function lessThan(mixed $value): self
     {
-        return $this->compareWith(self::LESS, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::LESS, $value);
+        return $this;
     }
 
     public function lessOrEqualTo(mixed $value): self
     {
-        return $this->compareWith(self::LESS_EQUAL, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::LESS_EQUAL, $value);
+        return $this;
     }
 
     public function equalTo(mixed $value): self
     {
-        return $this->compareWith(self::EQUAL, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::EQUAL, $value);
+        return $this;
     }
 
     public function notEqualTo(mixed $value): self
     {
-        return $this->compareWith(self::NOT_EQUAL, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::NOT_EQUAL, $value);
+        return $this;
     }
 
     public function between(mixed $lowerBoundary, mixed $upperBoundary): self
     {
-        return $this->compareWith(self::BETWEEN, [
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::BETWEEN, [
             $lowerBoundary,
             $upperBoundary,
         ]);
+        return $this;
     }
 
     public function notBetween(mixed $lowerBoundary, mixed $upperBoundary): self
     {
-        return $this->compareWith(self::NOT_BETWEEN, [
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::NOT_BETWEEN, [
             $lowerBoundary,
             $upperBoundary,
         ]);
+        return $this;
     }
 
     public function like(string $value): self
     {
-        return $this->compareWith(self::LIKE, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::LIKE, $value);
+        return $this;
     }
 
     public function notLike(string $value): self
     {
-        return $this->compareWith(self::NOT_LIKE, $value);
-    }
-
-    public function in(array $value): self
-    {
-        $this->compare = self::IN;
-        $this->value = $value;
-
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::NOT_LIKE, $value);
         return $this;
     }
 
+    /**
+     * @param array<array|int|string> $value
+     * @return $this
+     */
+    public function in(array $value): self
+    {
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::IN, $value);
+        return $this;
+    }
+
+    /**
+     * @param array<array|int|string> $value
+     * @return $this
+     */
     public function notIn(array $value): self
     {
-        return $this->compareWith(self::NOT_IN, $value);
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::NOT_IN, $value);
+        return $this;
+    }
+
+    public function exists(): self
+    {
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::EXISTS, null);
+        return $this;
+    }
+
+    public function notExists(): self
+    {
+        $this->comparisonBuilder = $this->comparisonBuilder->withComparison(self::NOT_EXISTS, null);
+        return $this;
     }
 
     public function state(string $state): self
@@ -177,29 +133,11 @@ class MetaQueryBuilder extends SubQuery
         return $this;
     }
 
-    public function exists(): self
-    {
-        return $this->compareWith(self::EXISTS, null);
-    }
-
-    public function notExists(): self
-    {
-        return $this->compareWith(self::NOT_EXISTS, null);
-    }
-
     public function get(): array
     {
-        $config = [
-            'key' => $this->key,
-            'compare' => $this->compare,
-            'type' => strtoupper((string) $this->type),
-            'state' => $this->state,
-        ];
-
-        if ($this->value !== null) {
-            $config['value'] = $this->value;
-        }
-
-        return $config;
+        return array_merge(
+            ['key' => $this->key, 'state' => $this->state],
+            $this->comparisonBuilder->buildConfig()
+        );
     }
 }

@@ -6,7 +6,7 @@ namespace Pollen\Query\Traits;
 
 trait Comment
 {
-    protected $commentCount;
+    protected int|array|null $commentCount = null;
 
     public function commentCount(int|array $count): self
     {

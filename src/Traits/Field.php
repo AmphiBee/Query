@@ -6,9 +6,9 @@ namespace Pollen\Query\Traits;
 
 trait Field
 {
-    protected $fields = 'all';
+    protected string $fields = 'all';
 
-    public function fields($value): self
+    public function fields(string $value): self
     {
         if ($value === '*') {
             $this->fields = 'all';
@@ -17,10 +17,5 @@ trait Field
         }
 
         return $this;
-    }
-
-    public function getFields()
-    {
-        return $this->fields;
     }
 }

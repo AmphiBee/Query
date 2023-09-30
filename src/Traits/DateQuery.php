@@ -9,6 +9,9 @@ use Pollen\Query\Traits\Query\SubQuery as SubQueryTrait;
 
 trait DateQuery
 {
+    /**
+     * @var array<string|array>
+     */
     protected ?array $dateQuery = null;
 
     use SubQueryTrait {

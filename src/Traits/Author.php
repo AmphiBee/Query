@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Traits;
 
+use Pollen\Query\PostQuery;
+
 trait Author
 {
-    protected $author;
+    protected ?int $author = null;
+    protected ?string $authorName = null;
 
-    protected $authorName;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $author_In = null;
 
-    protected $author_In;
-
-    protected $author_NotIn;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $author_NotIn = null;
 
     public function author(int $author): self
     {
@@ -28,6 +35,10 @@ trait Author
         return $this;
     }
 
+    /**
+     * @param array<int> $authorIn
+     * @return PostQuery|Author
+     */
     public function authorIn(array $authorIn): self
     {
         $this->author_In = $authorIn;
@@ -35,6 +46,10 @@ trait Author
         return $this;
     }
 
+    /**
+     * @param array<int> $authorNotIn
+     * @return PostQuery|Author
+     */
     public function authorNotIn(array $authorNotIn): self
     {
         $this->author_NotIn = $authorNotIn;

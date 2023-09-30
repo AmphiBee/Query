@@ -8,21 +8,33 @@ use Pollen\Query\QueryException;
 
 class DateQueryBuilder extends SubQuery
 {
-    private $year;
+    private string $year;
 
-    private $month;
+    private string $month;
 
-    private $day;
+    private string $day;
 
-    private $hour;
+    private string $hour;
 
-    private $minute;
+    private string $minute;
 
-    private $second;
+    private string $second;
 
-    private $after;
+    /**
+     * @var array{
+     *     w: int,
+     *     d: string
+     *  }|string|null
+     */
+    private array|string|null $after = null;
 
-    private $before;
+    /**
+     * @var array{
+     *     w: int,
+     *     d: string
+     *  }|string|null
+     */
+    private array|string|null $before = null;
 
     final public const POST_CREATED = 'post_date';
 
@@ -48,11 +60,19 @@ class DateQueryBuilder extends SubQuery
         return $this;
     }
 
-    private function validateDateArray(array $date)
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  } $date
+     * @return bool
+     * @throws QueryException
+     */
+    private function validateDateArray(array $date): bool
     {
         foreach ($date as $key => $part) {
-            if (! in_array($key, self::ALLOWED_KEYS)) {
-                throw new QueryException('Invalid key '.$key.' element supplied.');
+            if (!in_array($key, self::ALLOWED_KEYS)) {
+                throw new QueryException('Invalid key ' . $key . ' element supplied.');
             }
             $this->$key = $part;
         }
@@ -60,27 +80,42 @@ class DateQueryBuilder extends SubQuery
         return true;
     }
 
-    private function applyDateArray(array $date)
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  } $date
+     * @return void
+     */
+    private function applyDateArray(array $date): void
     {
         foreach ($date as $key => $part) {
-            $this->$key = (int) $part;
+            $this->$key = (int)$part;
         }
     }
 
-    public function within($date, $extract = 'Ymdhis')
+    public function within(array|string $date, string $extract = 'Ymdhis')
     {
-
-        if (is_array($date) && $this->validateDateArray($date)) {
-            $this->applyDateArray($date);
+        if (is_array($date)) {
+            $this->handleArrayDate($date);
         } else {
-            $parts = $this->extractFromDate($date, $extract);
-            $this->applyDateArray($parts);
+            $this->handleStringOrNumericDate($date, $extract);
         }
-
         return $this;
     }
 
-    public function between($fromDate, $toDate)
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  }|string $fromDate
+     * @param array{
+     *    w: int,
+     *    d: string
+     * }|string $toDate
+     * @throws QueryException
+     */
+    public function between(array|string $fromDate, array|string $toDate): self
     {
 
         $this->after = $this->extractFromDate($fromDate);
@@ -89,62 +124,186 @@ class DateQueryBuilder extends SubQuery
         return $this;
     }
 
-    public function before($beforeDate)
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  }|string $beforeDate
+     * @throws QueryException
+     */
+    public function before(array|string $beforeDate): self
     {
         $this->before = $this->extractFromDate($beforeDate);
 
         return $this;
     }
 
-    public function after($afterDate)
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  }|string $afterDate
+     * @throws QueryException
+     */
+    public function after(array|string $afterDate): self
     {
         $this->after = $this->extractFromDate($afterDate);
 
         return $this;
     }
 
-    public function extractFromDate($date, $extract = 'Ymdhis')
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  }|string $date
+     * @return array{
+     *     w: int,
+     *     d: string
+     *   }
+     * @throws QueryException
+     */
+    public function extractFromDate(array|string $date, string $extract = 'Ymdhis'): array
     {
 
         if (is_array($date)) {
             return $date;
         }
 
-        if (! is_numeric($date)) {
-            $date = strtotime((string) $date);
+        if (!is_numeric($date)) {
+            $date = strtotime((string)$date);
 
             if ($date === false) {
-                throw new QueryException('Provided datestring '.$date.' could not be converted to time');
+                throw new QueryException('Provided datestring ' . $date . ' could not be converted to time');
             }
         }
 
         $extracted = [];
 
-        if (str_contains((string) $extract, 'Y')) {
+        if (str_contains((string)$extract, 'Y')) {
             $extracted['year'] = date('Y', $date);
         }
-        if (str_contains((string) $extract, 'm')) {
+        if (str_contains((string)$extract, 'm')) {
             $extracted['month'] = date('m', $date);
         }
-        if (str_contains((string) $extract, 'd')) {
+        if (str_contains((string)$extract, 'd')) {
             $extracted['day'] = date('d', $date);
         }
-        if (str_contains((string) $extract, 'h')) {
+        if (str_contains((string)$extract, 'h')) {
             $extracted['hour'] = date('h', $date);
         }
-        if (str_contains((string) $extract, 'i')) {
+        if (str_contains((string)$extract, 'i')) {
             $extracted['minute'] = date('i', $date);
         }
-        if (str_contains((string) $extract, 's')) {
+        if (str_contains((string)$extract, 's')) {
             $extracted['second'] = date('s', $date);
         }
 
         return $extracted;
     }
 
-    public function get()
+    /**
+     * @param array{
+     *    w: int,
+     *    d: string
+     *  } $date
+     * @throws QueryException
+     */
+    private function handleArrayDate(array $date): void
     {
-        $config = [
+        if ($this->validateDateArray($date)) {
+            $this->applyDateArray($date);
+        }
+    }
+
+    /**
+     * @param array{
+     *  w: int,
+     *  d: string
+     * }|string $date
+     * @throws QueryException
+     */
+    private function handleStringOrNumericDate(string|array $date, string $extract): void
+    {
+        $parts = $this->extractFromDate($date, $extract);
+        $this->applyDateArray($parts);
+    }
+
+    /**
+     * @return array<string|array>
+     */
+    public function get(): array
+    {
+        $beforeIsNotNull = !is_null($this->before);
+        $afterIsNotNull = !is_null($this->after);
+
+        if ($beforeIsNotNull && $afterIsNotNull) {
+            return $this->handleBeforeAndAfter();
+        }
+
+        if ($beforeIsNotNull) {
+            return $this->handleBeforeOnly();
+        }
+
+        if ($afterIsNotNull) {
+            return $this->handleAfterOnly();
+        }
+
+        return $this->handleDefault();
+    }
+
+    /**
+     * @return array{
+     *   w: int,
+     *   d: string
+     * }
+     */
+    private function handleBeforeAndAfter(): array
+    {
+        return [
+            'column' => $this->column,
+            'before' => $this->before,
+            'after' => $this->after,
+        ];
+    }
+
+    /**
+     * @return array{
+     *   w: int,
+     *   d: string
+     * }
+     */
+    private function handleBeforeOnly(): array
+    {
+        return [
+            'column' => $this->column,
+            'before' => $this->before,
+        ];
+    }
+
+    /**
+     * @return array{
+     *   w: int,
+     *   d: string
+     * }
+     */
+    private function handleAfterOnly(): array
+    {
+        return [
+            'column' => $this->column,
+            'after' => $this->after,
+        ];
+    }
+
+    /**
+     * @return array{
+     *   w: int,
+     *   d: string
+     * }
+     */
+    private function handleDefault(): array
+    {
+        return [
             'column' => $this->column,
             'year' => $this->year,
             'month' => $this->month,
@@ -153,25 +312,5 @@ class DateQueryBuilder extends SubQuery
             'minute' => $this->minute,
             'second' => $this->second,
         ];
-
-        if (! is_null($this->before) && ! is_null($this->after)) {
-            unset($config);
-            $config = [];
-            $config['column'] = $this->column;
-            $config['before'] = $this->before;
-            $config['after'] = $this->after;
-        } elseif (! is_null($this->before)) {
-            unset($config);
-            $config = [];
-            $config['column'] = $this->column;
-            $config['before'] = $this->before;
-        } elseif (! is_null($this->after)) {
-            unset($config);
-            $config = [];
-            $config['column'] = $this->column;
-            $config['after'] = $this->after;
-        }
-
-        return $config;
     }
 }

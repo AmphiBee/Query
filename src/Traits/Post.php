@@ -4,25 +4,42 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Traits;
 
+use Pollen\Query\PostQuery;
+
 trait Post
 {
-    protected $postType = 'all';
+    protected string $postType = 'all';
 
-    protected $p;
+    protected ?int $p = null;
 
-    protected $name;
+    protected ?string $name = null;
 
-    protected $postParent;
+    protected ?int $postParent = null;
 
-    protected $postParent_In;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $postParent_In = null;
 
-    protected $postParent_NotIn;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $postParent_NotIn = null;
 
-    protected $post_In;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $post_In = null;
 
-    protected $post_NotIn;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $post_NotIn = null;
 
-    protected $postName_In;
+    /**
+     * @var array<string>|null
+     */
+    protected ?array $postName_In = null;
 
     public function postType(string|array $postType): self
     {
@@ -52,6 +69,10 @@ trait Post
         return $this;
     }
 
+    /**
+     * @param array<int> $postParentIn
+     * @return Post|PostQuery
+     */
     public function whereParentIn(array $postParentIn): self
     {
         $this->postParent_In = $postParentIn;
@@ -59,6 +80,10 @@ trait Post
         return $this;
     }
 
+    /**
+     * @param array<int> $postParentNotIn
+     * @return Post|PostQuery
+     */
     public function whereParentNotIn(array $postParentNotIn): self
     {
         $this->postParent_NotIn = $postParentNotIn;
@@ -66,6 +91,10 @@ trait Post
         return $this;
     }
 
+    /**
+     * @param array<int> $postIn
+     * @return Post|PostQuery
+     */
     public function whereIn(array $postIn): self
     {
         $this->post_In = $postIn;
@@ -73,6 +102,10 @@ trait Post
         return $this;
     }
 
+    /**
+     * @param array<int> $postNotIn
+     * @return Post|PostQuery
+     */
     public function whereNotIn(array $postNotIn): self
     {
         $this->post_NotIn = $postNotIn;
@@ -80,6 +113,10 @@ trait Post
         return $this;
     }
 
+    /**
+     * @param array<string> $postSlugIn
+     * @return Post|PostQuery
+     */
     public function slugIn(array $postSlugIn): self
     {
         $this->postName_In = $postSlugIn;

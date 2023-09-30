@@ -39,15 +39,12 @@ class TaxQueryBuilder extends SubQuery
     final public const SEARCH_BY_NAME = 'name';
 
     /**
-     * @var string SEARCH_BY_TERM_TAX_ID
      * Constant that represents the search parameter name for searching by term taxonomy ID.
      */
     final public const SEARCH_BY_TERM_TAX_ID = 'term_taxonomy_id';
 
     /**
      * This constant defines the term taxonomy ID for searching.
-     *
-     * @var string SEARCH_BY_TERM_TAX_ID
      */
     final public const SEARCH_BY_ID = 'term_id';
 
@@ -67,13 +64,13 @@ class TaxQueryBuilder extends SubQuery
     private bool $includeChildren = true;
 
     /**
-     * @var null|array
+     * @var array<string>|null
      * Variable that stores an array of terms used for searching.
      */
     private ?array $terms = null;
 
     public function __construct(
-        private $taxonomy
+        private string $taxonomy
     ) {
     }
 
@@ -126,7 +123,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the terms to be used in the query and sets the operator to "IN".
      *
-     * @param  array  $terms The terms to be used in the query.
+     * @param  array<string|int>  $terms The terms to be used in the query.
      * @return self Returns the current instance of the object.
      */
     public function contains(array $terms): self
@@ -140,7 +137,7 @@ class TaxQueryBuilder extends SubQuery
     /**
      * Sets the terms to exclude from the search.
      *
-     * @param  array  $terms The terms to exclude.
+     * @param  array<string|int>  $terms The terms to exclude.
      */
     public function notContains(array $terms): self
     {
@@ -235,17 +232,13 @@ class TaxQueryBuilder extends SubQuery
     }
 
     /**
-     * Retrieves the filter settings as an array.
-     *
-     * @return array Returns an array containing the filter settings.
-     * The array structure is as follows:
-     * [
-     *    'taxonomy' => string,   // The taxonomy to be filtered
-     *    'field' => string,      // The field within the taxonomy to filter on
-     *    'terms' => array,       // The terms to be used in the filter
-     *    'operator' => string,   // The operator used in the filter
-     *    'include_children' => bool,   // Flag indicating whether to include child terms in the filter
-     * ]
+     * @return array{
+     *   taxonomy: string,
+     *   field: string,
+     *   terms: array|null,
+     *   operator: string,
+     *   include_children: bool
+     * }
      */
     public function get(): array
     {

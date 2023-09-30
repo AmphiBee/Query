@@ -9,7 +9,7 @@ use Pollen\Query\QueryBuilder\TaxQueryBuilder;
 
 class TaxQuery extends QueryBuilder
 {
-    public function taxonomy(string $taxonomy)
+    public function taxonomy(string $taxonomy): TaxQueryBuilder
     {
         return new TaxQueryBuilder($taxonomy);
     }

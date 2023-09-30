@@ -6,7 +6,7 @@ namespace Pollen\Query\QueryBuilder;
 
 abstract class SubQuery
 {
-    protected $compare = 'LIKE';
+    protected string $compare = 'LIKE';
 
     public const EQUAL = '=';
 

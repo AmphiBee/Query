@@ -9,7 +9,7 @@ use Pollen\Query\QueryBuilder\QueryBuilder;
 
 class MetaQuery extends QueryBuilder
 {
-    public function meta($key)
+    public function meta(string $key)
     {
         return new MetaQueryBuilder($key);
     }

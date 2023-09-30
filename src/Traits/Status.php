@@ -6,9 +6,9 @@ namespace Pollen\Query\Traits;
 
 trait Status
 {
-    protected $postStatus;
+    protected string|array|null $postStatus = null;
 
-    public function postStatus($status): self
+    public function postStatus(string|array $status): self
     {
         $this->postStatus = $status;
 

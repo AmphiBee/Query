@@ -4,17 +4,28 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Traits;
 
+use Pollen\Query\PostQuery;
+
 trait Category
 {
-    protected $cat;
+    protected ?int $cat = null;
 
-    protected $categoryName;
+    protected ?string $categoryName = null;
 
-    protected $categoryAnd;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $categoryAnd = null;
 
-    protected $category_In;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $category_In = null;
 
-    protected $category_NotIn;
+    /**
+     * @var array<int>|null
+     */
+    protected ?array $category_NotIn = null;
 
     public function cat(int $cat): self
     {
@@ -30,6 +41,10 @@ trait Category
         return $this;
     }
 
+    /**
+     * @param array<int> $categoryAnd
+     * @return PostQuery|Category
+     */
     public function categoryAnd(array $categoryAnd): self
     {
         $this->categoryAnd = $categoryAnd;
@@ -37,6 +52,10 @@ trait Category
         return $this;
     }
 
+    /**
+     * @param array<int> $categoryIn
+     * @return PostQuery|Category
+     */
     public function categoryIn(array $categoryIn): self
     {
         $this->category_In = $categoryIn;
@@ -44,6 +63,10 @@ trait Category
         return $this;
     }
 
+    /**
+     * @param array<int> $categoryNotIn
+     * @return PostQuery|Category
+     */
     public function categoryNotIn(array $categoryNotIn): self
     {
         $this->category_NotIn = $categoryNotIn;

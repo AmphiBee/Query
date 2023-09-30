@@ -9,6 +9,9 @@ use Pollen\Query\Traits\Query\SubQuery as SubQueryTrait;
 
 trait MetaQuery
 {
+    /**
+     * @var array<string|array>
+     */
     protected ?array $metaQuery = null;
 
     use SubQueryTrait {

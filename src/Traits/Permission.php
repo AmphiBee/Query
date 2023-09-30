@@ -17,7 +17,7 @@ trait Permission
         return $this;
     }
 
-    protected function isValidPermission($value): bool
+    protected function isValidPermission(string $value): bool
     {
         return in_array($value, ['readable', 'editable'], true);
     }

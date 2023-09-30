@@ -6,7 +6,7 @@ namespace Pollen\Query\Traits;
 
 trait Search
 {
-    protected $s;
+    protected ?string $s = null;
 
     public function search(string $keyword): self
     {

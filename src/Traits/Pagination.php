@@ -6,19 +6,19 @@ namespace Pollen\Query\Traits;
 
 trait Pagination
 {
-    protected $nopaging;
+    protected ?bool $nopaging = null;
 
-    protected $postsPerPage;
+    protected ?int $postsPerPage = null;
 
-    protected $postsPerArchivePage;
+    protected ?int $postsPerArchivePage = null;
 
-    protected $offset;
+    protected ?int $offset = null;
 
-    protected $paged;
+    protected ?int $paged = null;
 
-    protected $page;
+    protected ?int $page = null;
 
-    protected $ignoreStickyPosts;
+    protected ?bool $ignoreStickyPosts = null;
 
     public function noPaging(bool $noPaging = true): self
     {

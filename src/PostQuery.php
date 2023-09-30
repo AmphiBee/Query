@@ -28,9 +28,12 @@ class PostQuery
 {
     use ArgumentHelper, Author, Caching, Category, Comment, DateQuery, Field, MetaQuery, MimeType, Order, Pagination, Password, Permission, PostTrait, Search, Status, Tag, TaxQuery;
 
+    /**
+     * @var array<array|string>
+     */
     private array $queryBuilder = [];
 
-    public function __construct(array|int $postId = null, $fields = null)
+    public function __construct(array|int|null $postId = null, ?string $fields = null)
     {
         if (is_int($postId)) {
             $this->postId($postId);
@@ -43,7 +46,7 @@ class PostQuery
         }
     }
 
-    public static function find(array|string|int $postId = null): self
+    public static function find(array|int|null $postId = null): self
     {
         return new static($postId);
     }

@@ -18,21 +18,21 @@ trait Order
         return $this;
     }
 
-    public function latest()
+    public function latest(): self
     {
         $this->orderby['post_date'] = 'DESC';
 
         return $this;
     }
 
-    public function oldest()
+    public function oldest(): self
     {
         $this->orderby['post_date'] = 'ASC';
 
         return $this;
     }
 
-    public function inRandomOrder()
+    public function inRandomOrder(): self
     {
         $this->orderby = 'rand';
 

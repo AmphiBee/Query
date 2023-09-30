@@ -4,37 +4,48 @@ declare(strict_types=1);
 
 namespace Pollen\Query\QueryBuilder;
 
+use Closure;
+
 class QueryBuilder
 {
-    protected $query = ['relation' => 'AND'];
+    /**
+     * @var array<string|array>
+     */
+    protected array $query = ['relation' => 'AND'];
 
-    protected $stack;
+    /**
+     * @var array<string|array>
+     */
+    protected array $stack = [];
 
-    protected $depth = 0;
+    protected int $depth = 0;
 
-    protected $lastRelation = [];
+    /**
+     * @var array<string>
+     */
+    protected array $lastRelation = [];
 
     public function __construct()
     {
         $this->stack = [&$this->query];
     }
 
-    public function where($callbackOrKey)
+    public function where(Closure|SubQuery $callbackOrKey): self
     {
         return $this->addCondition('AND', $callbackOrKey);
     }
 
-    public function andWhere($callbackOrKey)
+    public function andWhere(Closure|SubQuery $callbackOrKey): self
     {
         return $this->addCondition('AND', $callbackOrKey);
     }
 
-    public function orWhere($callbackOrKey)
+    public function orWhere(Closure|SubQuery $callbackOrKey): self
     {
         return $this->addCondition('OR', $callbackOrKey);
     }
 
-    protected function addCondition($relation, $callbackOrKey)
+    protected function addCondition(string $relation, Closure|SubQuery $callbackOrKey): self
     {
         $current = &$this->stack[$this->depth];
 
@@ -42,15 +53,15 @@ class QueryBuilder
         $this->lastRelation[$this->depth] = $relation;
 
         if ($callbackOrKey instanceof SubQuery) {
-            $subquery = $callbackOrKey->get();
+            $subQuery = $callbackOrKey->get();
 
-            if (isset($subquery['state']) && $subquery['state']) {
-                $state = $subquery['state'];
-                unset($subquery['state']);
-                $current[$state] = $subquery;
+            if (isset($subQuery['state']) && $subQuery['state']) {
+                $state = $subQuery['state'];
+                unset($subQuery['state']);
+                $current[$state] = $subQuery;
             } else {
-                unset($subquery['state']);
-                $current[] = $subquery;
+                unset($subQuery['state']);
+                $current[] = $subQuery;
             }
         } elseif (is_callable($callbackOrKey)) {
 
@@ -72,7 +83,10 @@ class QueryBuilder
         return $this;
     }
 
-    public function get()
+    /**
+     * @return array<array|string>
+     */
+    public function get(): array
     {
         return $this->query;
     }

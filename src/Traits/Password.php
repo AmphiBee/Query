@@ -6,9 +6,9 @@ namespace Pollen\Query\Traits;
 
 trait Password
 {
-    protected $hasPassword;
+    protected ?bool $hasPassword = null;
 
-    protected $postPassword;
+    protected ?string $postPassword = null;
 
     public function withoutPassword(): self
     {
@@ -17,7 +17,7 @@ trait Password
         return $this;
     }
 
-    public function withPassword(string $postPassword = null): self
+    public function withPassword(string|null $postPassword = null): self
     {
         if ($postPassword !== null) {
             $this->postPassword = $postPassword;

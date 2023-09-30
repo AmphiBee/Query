@@ -9,6 +9,9 @@ use Pollen\Query\Traits\Query\SubQuery as SubQueryTrait;
 
 trait TaxQuery
 {
+    /**
+     * @var array<string|array>
+     */
     protected ?array $taxQuery = null;
 
     use SubQueryTrait {

@@ -9,12 +9,12 @@ use Pollen\Query\QueryBuilder\QueryBuilder;
 
 class DateQuery extends QueryBuilder
 {
-    public function date(string $key = null)
+    public function date(?string $key = null): DateQueryBuilder
     {
         return new DateQueryBuilder($key);
     }
 
-    public function inclusive()
+    public function inclusive(): self
     {
         $current = &$this->stack[$this->depth];
         $current['inclusive'] = true;

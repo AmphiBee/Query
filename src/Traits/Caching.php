@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Traits;
 
+use Pollen\Query\PostQuery;
+
 trait Caching
 {
     protected ?bool $cacheResults = null;
@@ -19,16 +21,16 @@ trait Caching
         return $this;
     }
 
-    public function updateMetaCache($value = true): self
+    public function updateMetaCache(bool $value = true): self
     {
-        $this->updatePostMetaCache = (bool) $value;
+        $this->updatePostMetaCache = $value;
 
         return $this;
     }
 
-    public function updateTermCache($value = true): self
+    public function updateTermCache(bool $value = true): self
     {
-        $this->updatePostTermCache = (bool) $value;
+        $this->updatePostTermCache = $value;
 
         return $this;
     }
