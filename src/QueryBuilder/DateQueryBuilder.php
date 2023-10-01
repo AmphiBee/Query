@@ -147,39 +147,51 @@ class DateQueryBuilder extends SubQuery
      */
     public function extractFromDate(array|string $date, string $extract = 'Ymdhis'): array
     {
-
         if (is_array($date)) {
             return $date;
         }
 
         if (! is_numeric($date)) {
             $date = strtotime($date);
+        }
 
-            if ($date === false) {
-                throw new QueryException('Provided datestring '.$date.' could not be converted to time');
+        if ($date === false) {
+            throw new QueryException('Provided datestring could not be converted to time');
+        }
+
+        return $this->extractDateDetails($date, $extract);
+    }
+
+    /**
+     * @return array{
+     *   year: string,
+     *   month: string,
+     *   day: string,
+     *   jour: string,
+     *   minute: string,
+     *   second: string,
+     * }
+     */
+
+    private function extractDateDetails(int $date, string $extract): array
+    {
+        $extracted = [];
+        $mapping = [
+            'Y' => 'year',
+            'm' => 'month',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        ];
+
+        foreach ($mapping as $key => $value) {
+            if (str_contains($extract, $key)) {
+                $extracted[$value] = date($key, $date);
             }
         }
 
-        $extracted = [];
-
-        if (str_contains($extract, 'Y')) {
-            $extracted['year'] = date('Y', $date);
-        }
-        if (str_contains($extract, 'm')) {
-            $extracted['month'] = date('m', $date);
-        }
-        if (str_contains($extract, 'd')) {
-            $extracted['day'] = date('d', $date);
-        }
-        if (str_contains($extract, 'h')) {
-            $extracted['hour'] = date('h', $date);
-        }
-        if (str_contains($extract, 'i')) {
-            $extracted['minute'] = date('i', $date);
-        }
-        if (str_contains($extract, 's')) {
-            $extracted['second'] = date('s', $date);
-        }
+        var_export($extracted);
 
         return $extracted;
     }

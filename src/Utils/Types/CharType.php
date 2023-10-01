@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Utils\Types;
 
-class CharType
+final class CharType
 {
-    final public const CHAR = 'CHAR';
+    public const CHAR = 'CHAR';
 }

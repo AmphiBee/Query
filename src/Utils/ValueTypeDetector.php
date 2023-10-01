@@ -51,8 +51,7 @@ class ValueTypeDetector
             $this->detectors,
             function ($carry, $detector) {
                 return $carry ?? $detector->detect($this->value);
-            },
-            null
+            }
         );
 
         return $type ?? CharType::CHAR;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Utils\Types;
 
-class BooleanType implements ValueTypeContract
+final class BooleanType implements ValueTypeContract
 {
-    final public const BINARY = 'BINARY';
+    public const BINARY = 'BINARY';
 
     public function detect(mixed $value): ?string
     {

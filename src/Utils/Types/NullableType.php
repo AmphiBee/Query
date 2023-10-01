@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Utils\Types;
 
-class NullableType implements ValueTypeContract
+final class NullableType implements ValueTypeContract
 {
-    final public const CHAR = 'CHAR';
+    public const CHAR = 'CHAR';
 
     public function detect(mixed $value): ?string
     {

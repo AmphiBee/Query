@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Utils\Types;
 
-class DatetimeType implements ValueTypeContract
+final class DatetimeType implements ValueTypeContract
 {
-    final public const DATE = 'DATE';
+    public const DATE = 'DATE';
 
-    final public const DATETIME = 'DATETIME';
+    public const DATETIME = 'DATETIME';
 
-    final public const TIME = 'TIME';
+    public const TIME = 'TIME';
 
     private const DATE_REGEX = '/^\d{4}-\d{2}-\d{2}$/';
 
