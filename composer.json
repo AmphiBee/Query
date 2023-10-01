@@ -26,6 +26,7 @@
         }
     },
     "require": {
+        "php": "^8.1.0",
         "pollen/wordpress-args": "dev-main",
         "laravel/pint": "^1.13"
     }

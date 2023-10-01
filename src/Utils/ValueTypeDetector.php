@@ -9,9 +9,13 @@ use Pollen\Query\Utils\Types\CharType;
 use Pollen\Query\Utils\Types\DatetimeType;
 use Pollen\Query\Utils\Types\NullableType;
 use Pollen\Query\Utils\Types\NumberType;
+use Pollen\Query\Utils\Types\ValueTypeContract;
 
 class ValueTypeDetector
 {
+    /**
+     * @var array<ValueTypeContract>
+     */
     private array $detectors = [];
 
     public function __construct(protected mixed $value, protected ?string $type = null)
