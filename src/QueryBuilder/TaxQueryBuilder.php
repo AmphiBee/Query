@@ -70,7 +70,7 @@ class TaxQueryBuilder extends SubQuery
     private ?array $terms = null;
 
     public function __construct(
-        private string $taxonomy
+        private readonly string $taxonomy
     ) {
     }
 

@@ -9,12 +9,12 @@ use Pollen\Query\QueryBuilder\MetaQueryBuilder;
 
 class Query
 {
-    public static function meta(string $key)
+    public static function meta(string $key): MetaQueryBuilder
     {
         return new MetaQueryBuilder($key);
     }
 
-    public static function date(string $key)
+    public static function date(string $key): DateQueryBuilder
     {
         return new DateQueryBuilder($key);
     }

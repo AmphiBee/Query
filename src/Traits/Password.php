@@ -17,7 +17,7 @@ trait Password
         return $this;
     }
 
-    public function withPassword(string|null $postPassword = null): self
+    public function withPassword(?string $postPassword = null): self
     {
         if ($postPassword !== null) {
             $this->postPassword = $postPassword;

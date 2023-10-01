@@ -42,7 +42,7 @@ trait Category
     }
 
     /**
-     * @param array<int> $categoryAnd
+     * @param  array<int>  $categoryAnd
      * @return PostQuery|Category
      */
     public function categoryAnd(array $categoryAnd): self
@@ -53,7 +53,7 @@ trait Category
     }
 
     /**
-     * @param array<int> $categoryIn
+     * @param  array<int>  $categoryIn
      * @return PostQuery|Category
      */
     public function categoryIn(array $categoryIn): self
@@ -64,7 +64,7 @@ trait Category
     }
 
     /**
-     * @param array<int> $categoryNotIn
+     * @param  array<int>  $categoryNotIn
      * @return PostQuery|Category
      */
     public function categoryNotIn(array $categoryNotIn): self

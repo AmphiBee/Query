@@ -19,32 +19,70 @@ trait SubQuery
 
     public function query(callable|SubQueryAbstract $callback): self
     {
-        $queryField = $this->queryType.'Query';
-
-        if (! $this->{$queryField}) {
-            $this->{$queryField} = ['relation' => 'AND'];
-        }
-
-        if (! isset($this->queryBuilder[$this->queryType])) {
-            $class = '\\Pollen\\Query\\'.ucfirst($this->queryType).'Query';
-            $this->queryBuilder[$this->queryType] = new $class();
-        }
+        $this->initializeQueryField();
+        $this->initializeQueryBuilder();
 
         if ($callback instanceof SubQueryAbstract) {
-            $subQuery = $callback->get();
-            if (isset($subQuery['state']) && $subQuery['state']) {
-                $state = $subQuery['state'];
-                unset($subQuery['state']);
-                $this->{$queryField}[$state] = $subQuery;
-            } else {
-                unset($subQuery['state']);
-                $this->{$queryField} = array_merge($this->{$queryField}, [$subQuery]);
-            }
+            $this->handleSubQueryCallback($callback);
         } else {
-            $callback($this->queryBuilder[$this->queryType]);
-            $this->{$queryField} = array_merge($this->{$queryField}, $this->queryBuilder[$this->queryType]->get());
+            $this->handleCallableCallback($callback);
         }
 
         return $this;
+    }
+
+    protected function initializeQueryField(): void
+    {
+        $queryField = $this->queryType.'Query';
+
+        if ($this->{$queryField}) {
+            return;
+        }
+
+        $this->{$queryField} = ['relation' => 'AND'];
+    }
+
+    protected function initializeQueryBuilder(): void
+    {
+        $class = '\\Pollen\\Query\\'.ucfirst($this->queryType).'Query';
+        $this->queryBuilder[$this->queryType] = $this->queryBuilder[$this->queryType] ?? new $class();
+    }
+
+    protected function handleSubQueryCallback(SubQueryAbstract $callback): void
+    {
+        $queryField = $this->queryType.'Query';
+        $subQuery = $this->getSubQueryState($callback);
+
+        ['state' => $state, 'query' => $query] = $subQuery;
+
+        if ($state) {
+            $this->{$queryField}[$state] = $query;
+        } else {
+            $this->{$queryField} = array_merge($this->{$queryField}, [$query]);
+        }
+    }
+
+    /**
+     * @return array{
+     *    state: string,
+     *    query: array<string, int, bool>
+     *  }
+     * /
+     */
+    private function getSubQueryState(SubQueryAbstract $callback): array
+    {
+        $subQuery = $callback->get();
+
+        $state = $subQuery['state'] ?? false;
+        unset($subQuery['state']);
+
+        return ['state' => $state, 'query' => $subQuery];
+    }
+
+    protected function handleCallableCallback(callable $callback): void
+    {
+        $queryField = $this->queryType.'Query';
+        $callback($this->queryBuilder[$this->queryType]);
+        $this->{$queryField} = array_merge($this->{$queryField}, $this->queryBuilder[$this->queryType]->get());
     }
 }

@@ -8,8 +8,6 @@ use Pollen\Query\PostQuery;
 
 trait Post
 {
-    protected string $postType = 'all';
-
     protected ?int $p = null;
 
     protected ?string $name = null;
@@ -41,13 +39,6 @@ trait Post
      */
     protected ?array $postName_In = null;
 
-    public function postType(string|array $postType): self
-    {
-        $this->postType = $postType;
-
-        return $this;
-    }
-
     public function postId(int $postId): self
     {
         $this->p = $postId;
@@ -70,7 +61,7 @@ trait Post
     }
 
     /**
-     * @param array<int> $postParentIn
+     * @param  array<int>  $postParentIn
      * @return Post|PostQuery
      */
     public function whereParentIn(array $postParentIn): self
@@ -81,7 +72,7 @@ trait Post
     }
 
     /**
-     * @param array<int> $postParentNotIn
+     * @param  array<int>  $postParentNotIn
      * @return Post|PostQuery
      */
     public function whereParentNotIn(array $postParentNotIn): self
@@ -92,7 +83,7 @@ trait Post
     }
 
     /**
-     * @param array<int> $postIn
+     * @param  array<int>  $postIn
      * @return Post|PostQuery
      */
     public function whereIn(array $postIn): self
@@ -103,7 +94,7 @@ trait Post
     }
 
     /**
-     * @param array<int> $postNotIn
+     * @param  array<int>  $postNotIn
      * @return Post|PostQuery
      */
     public function whereNotIn(array $postNotIn): self
@@ -114,7 +105,7 @@ trait Post
     }
 
     /**
-     * @param array<string> $postSlugIn
+     * @param  array<string>  $postSlugIn
      * @return Post|PostQuery
      */
     public function slugIn(array $postSlugIn): self

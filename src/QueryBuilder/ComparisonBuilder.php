@@ -8,16 +8,10 @@ use Pollen\Query\Utils\ValueTypeDetector;
 
 class ComparisonBuilder
 {
-    private mixed $value;
-
-    private ?string $compare;
-
     private ?string $type = null;
 
-    public function __construct(?string $compare, mixed $value)
+    public function __construct(private readonly ?string $compare, private mixed $value)
     {
-        $this->compare = $compare;
-        $this->value = $value;
         $this->type = (new ValueTypeDetector($value, $this->type))->detect();
     }
 
@@ -26,6 +20,9 @@ class ComparisonBuilder
         return new self($compare, $value, $this->type);
     }
 
+    /**
+     * @return array<string, string|int|array>
+     */
     public function buildConfig(): array
     {
         $config = [

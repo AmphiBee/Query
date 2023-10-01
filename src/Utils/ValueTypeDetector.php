@@ -4,79 +4,53 @@ declare(strict_types=1);
 
 namespace Pollen\Query\Utils;
 
+use Pollen\Query\Utils\Types\BooleanType;
+use Pollen\Query\Utils\Types\CharType;
+use Pollen\Query\Utils\Types\DatetimeType;
+use Pollen\Query\Utils\Types\NullableType;
+use Pollen\Query\Utils\Types\NumberType;
+
 class ValueTypeDetector
 {
+    private array $detectors = [];
 
-    final public const NUMERIC = 'NUMERIC';
+    public function __construct(protected mixed $value, protected ?string $type = null)
+    {
+        $detectorClasses = [
+            BooleanType::class,
+            DatetimeType::class,
+            NullableType::class,
+            NumberType::class,
+        ];
 
-    final public const BINARY = 'BINARY';
-
-    final public const CHAR = 'CHAR';
-
-    final public const DATE = 'DATE';
-
-    final public const DATETIME = 'DATETIME';
-
-    final public const DECIMAL = 'DECIMAL';
-
-    final public const SIGNED = 'SIGNED';
-
-    final public const TIME = 'TIME';
-
-    final public const UNSIGNED = 'UNSIGNED';
-
-    public function __construct(protected mixed $value, protected ?string $type = null) {
-
+        foreach ($detectorClasses as $detectorClass) {
+            $this->detectors[] = new $detectorClass();
+        }
     }
 
     public function detect(): string
     {
-        $defaultType = 'CHAR';
-
         if (is_array($this->value)) {
             $this->value = $this->value[0];
         }
 
-        if (!is_null($this->type)) {
+        if (! is_null($this->type)) {
             return $this->type;
         }
 
-        if (is_null($this->value)) {
-            return $defaultType;
-        }
+        return $this->detectType();
+    }
 
-        if ($this->value === 0 || $this->value === 1) {
-            return self::BINARY;
-        }
+    private function detectType(): ?string
+    {
+        $type = array_reduce(
+            $this->detectors,
+            function ($carry, $detector) {
+                return $carry ?? $detector->detect($this->value);
+            },
+            null
+        );
 
-        if (is_int($this->value) && $this->value < 0) {
-            return self::SIGNED;
-        }
-
-        if (is_int($this->value) && $this->value >= 0) {
-            return self::UNSIGNED;
-        }
-
-        if (is_float($this->value)) {
-            return self::DECIMAL;
-        }
-
-        if (is_string($this->value) && is_numeric($this->value)) {
-            return self::NUMERIC;
-        }
-
-        if (is_string($this->value) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $this->value)) {
-            return self::DATE;
-        }
-
-        if (is_string($this->value) && preg_match('/^\d{2}:\d{2}:\d{2}$/', $this->value)) {
-            return self::TIME;
-        }
-
-        if (is_string($this->value) && preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $this->value)) {
-            return self::DATETIME;
-        }
-
-        return $defaultType;
+        return $type ?? CharType::CHAR;
     }
 }

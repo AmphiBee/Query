@@ -3,21 +3,21 @@
 use Pollen\Query\Utils\ValueTypeDetector;
 
 $dataProvider = [
-    ['value' => null, 'expected' => ValueTypeDetector::CHAR, 'message' => 'with null value'],
-    ['value' => -5, 'expected' => ValueTypeDetector::SIGNED, 'message' => 'with negative integer value'],
-    ['value' => 5, 'expected' => ValueTypeDetector::UNSIGNED, 'message' => 'with positive integer value'],
-    ['value' => 0, 'expected' => ValueTypeDetector::BINARY, 'message' => 'with negative binary value'],
-    ['value' => 1, 'expected' => ValueTypeDetector::BINARY, 'message' => 'with positive binary value'],
-    ['value' => 5.5, 'expected' => ValueTypeDetector::DECIMAL, 'message' => 'with float value'],
-    ['value' => '5', 'expected' => ValueTypeDetector::NUMERIC, 'message' => 'with numeric string value'],
-    ['value' => '2021-01-01', 'expected' => ValueTypeDetector::DATE, 'message' => 'with date value'],
-    ['value' => '12:34:56', 'expected' => ValueTypeDetector::TIME, 'message' => 'with time value'],
-    ['value' => '2021-01-01 12:34:56', 'expected' => ValueTypeDetector::DATETIME, 'message' => 'with datetime value'],
-    ['value' => 'SomeString', 'expected' => ValueTypeDetector::CHAR, 'message' => 'with other string value'],
-    ['value' => 'SomeString', 'type' => ValueTypeDetector::DATETIME, 'expected' => ValueTypeDetector::DATETIME, 'message' => 'with forced type'],
+    ['value' => null, 'expected' => \Pollen\Query\Utils\Types\CharType::CHAR, 'message' => 'with null value'],
+    ['value' => -5, 'expected' => \Pollen\Query\Utils\Types\NumberType::SIGNED, 'message' => 'with negative integer value'],
+    ['value' => 5, 'expected' => \Pollen\Query\Utils\Types\NumberType::UNSIGNED, 'message' => 'with positive integer value'],
+    ['value' => 0, 'expected' => \Pollen\Query\Utils\Types\BooleanType::BINARY, 'message' => 'with negative binary value'],
+    ['value' => 1, 'expected' => \Pollen\Query\Utils\Types\BooleanType::BINARY, 'message' => 'with positive binary value'],
+    ['value' => 5.5, 'expected' => \Pollen\Query\Utils\Types\NumberType::DECIMAL, 'message' => 'with float value'],
+    ['value' => '5', 'expected' => \Pollen\Query\Utils\Types\NumberType::NUMERIC, 'message' => 'with numeric string value'],
+    ['value' => '2021-01-01', 'expected' => \Pollen\Query\Utils\Types\DatetimeType::DATE, 'message' => 'with date value'],
+    ['value' => '12:34:56', 'expected' => \Pollen\Query\Utils\Types\DatetimeType::TIME, 'message' => 'with time value'],
+    ['value' => '2021-01-01 12:34:56', 'expected' => \Pollen\Query\Utils\Types\DatetimeType::DATETIME, 'message' => 'with datetime value'],
+    ['value' => 'SomeString', 'expected' => \Pollen\Query\Utils\Types\CharType::CHAR, 'message' => 'with other string value'],
+    ['value' => 'SomeString', 'type' => 'DATETIME', 'expected' => \Pollen\Query\Utils\Types\DatetimeType::DATETIME, 'message' => 'with forced type'],
 ];
 
-foreach($dataProvider as $data) {
+foreach ($dataProvider as $data) {
     $value = $data['value'];
     $expected = $data['expected'];
     $message = $data['message'];

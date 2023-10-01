@@ -9,6 +9,7 @@ use Pollen\Query\PostQuery;
 trait Author
 {
     protected ?int $author = null;
+
     protected ?string $authorName = null;
 
     /**
@@ -36,7 +37,7 @@ trait Author
     }
 
     /**
-     * @param array<int> $authorIn
+     * @param  array<int>  $authorIn
      * @return PostQuery|Author
      */
     public function authorIn(array $authorIn): self
@@ -47,7 +48,7 @@ trait Author
     }
 
     /**
-     * @param array<int> $authorNotIn
+     * @param  array<int>  $authorNotIn
      * @return PostQuery|Author
      */
     public function authorNotIn(array $authorNotIn): self

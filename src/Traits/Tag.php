@@ -52,7 +52,7 @@ trait Tag
     }
 
     /**
-     * @param array<int> $tagAnd
+     * @param  array<int>  $tagAnd
      * @return PostQuery|Tag
      */
     public function tagAnd(array $tagAnd): self
@@ -63,7 +63,7 @@ trait Tag
     }
 
     /**
-     * @param array<int> $tagIn
+     * @param  array<int>  $tagIn
      * @return PostQuery|Tag
      */
     public function tagIn(array $tagIn): self
@@ -74,7 +74,7 @@ trait Tag
     }
 
     /**
-     * @param array<int> $tagNotIn
+     * @param  array<int>  $tagNotIn
      * @return PostQuery|Tag
      */
     public function tagNotIn(array $tagNotIn): self
@@ -85,7 +85,7 @@ trait Tag
     }
 
     /**
-     * @param array<int> $tagSlugAnd
+     * @param  array<int>  $tagSlugAnd
      * @return PostQuery|Tag
      */
     public function tagSlugAnd(array $tagSlugAnd): self
@@ -96,7 +96,7 @@ trait Tag
     }
 
     /**
-     * @param array<string> $tagSlugIn
+     * @param  array<string>  $tagSlugIn
      * @return PostQuery|Tag
      */
     public function tagSlugIn(array $tagSlugIn): self

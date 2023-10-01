@@ -17,6 +17,7 @@ use Pollen\Query\Traits\Pagination;
 use Pollen\Query\Traits\Password;
 use Pollen\Query\Traits\Permission;
 use Pollen\Query\Traits\Post as PostTrait;
+use Pollen\Query\Traits\PostType;
 use Pollen\Query\Traits\Search;
 use Pollen\Query\Traits\Status;
 use Pollen\Query\Traits\Tag;
@@ -26,7 +27,7 @@ use WP_Query;
 
 class PostQuery
 {
-    use ArgumentHelper, Author, Caching, Category, Comment, DateQuery, Field, MetaQuery, MimeType, Order, Pagination, Password, Permission, PostTrait, Search, Status, Tag, TaxQuery;
+    use ArgumentHelper, Author, Caching, Category, Comment, DateQuery, Field, MetaQuery, MimeType, Order, Pagination, Password, Permission, PostTrait, PostType, Search, Status, Tag, TaxQuery;
 
     /**
      * @var array<array|string>
@@ -56,6 +57,9 @@ class PostQuery
         return new static(null, $fields);
     }
 
+    /**
+     * @return array<string, string|int|array>
+     */
     public function getArguments(): array
     {
         $args = $this->buildArguments();
