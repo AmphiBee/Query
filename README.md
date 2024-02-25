@@ -187,7 +187,7 @@ This will generate the following WP_Query arguments:
 ```php
 new WP_Query([
     'fields' => 'all',
-    'post_type' => 'all',
+    'post_type' => 'any',
 ]);
 ```
 
