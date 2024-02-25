@@ -6,7 +6,7 @@ namespace Pollen\Query\Traits;
 
 trait PostType
 {
-    protected string $postType = 'all';
+    protected string $postType = 'any';
 
     public function postType(string|array $postType): self
     {
